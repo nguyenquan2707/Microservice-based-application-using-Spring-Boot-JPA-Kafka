@@ -3,13 +3,24 @@ package com.example.customer.model.repository;
 import com.example.customer.model.dao.ICustomerDao;
 import com.example.customer.model.entity.Customer;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+@Transactional
 @Repository
-public class ICustomerDaoImpl implements ICustomerDao {
+public class CustomerRepository implements ICustomerDao {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public Customer addCustomer(Customer customer) {
-        return null;
+
+        entityManager.persist(customer);
+
+        return customer;
     }
 
     @Override

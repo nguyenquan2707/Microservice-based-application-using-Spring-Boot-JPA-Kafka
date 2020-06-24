@@ -1,5 +1,7 @@
 package com.example.customer.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -21,6 +23,7 @@ public class Customer {
     String address;
 
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    @JsonIgnore
     private CustomerSale sale;
 
 
