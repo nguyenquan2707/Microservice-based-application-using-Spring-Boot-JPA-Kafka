@@ -22,8 +22,10 @@ public class Customer {
     @Column(name = "address")
     String address;
 
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @OneToOne(mappedBy = "customer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
     private CustomerSale sale;
 
 
@@ -36,30 +38,45 @@ public class Customer {
     }
 
     public void setSale(CustomerSale sale) {
+
+        if(sale == null){
+            if(this.sale != null){
+                this.sale.setCustomer(null);
+            }
+        }else {
+            sale.setCustomer(this);
+        }
         this.sale = sale;
     }
 
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getMobile_no() {
         return mobile_no;
     }
+
     public void setMobile_no(String mobile_no) {
         this.mobile_no = mobile_no;
     }
+
     public String getAddress() {
         return address;
     }
+
     public void setAddress(String address) {
         this.address = address;
     }

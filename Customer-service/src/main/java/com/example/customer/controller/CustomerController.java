@@ -32,13 +32,18 @@ public class CustomerController  {
         return customerService.getCustomer(mobile_no);
     }
 
-    @RequestMapping(value = "sale/{mobile_no}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    @RequestMapping(value = "sale/view/{mobile_no}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public int getSaleInfo(@PathVariable String mobile_no){
         return saleService.getTotalSale(mobile_no);
     }
 
-    @RequestMapping(value = "sale", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
-    public int updateSaleInfo(@RequestBody Customer customer){
+    @RequestMapping(value = "sale/update", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
+    public Customer updateSaleInfo(@RequestBody Customer customer){
+        return saleService.updateTotalSale(customer);
+    }
+
+    @RequestMapping(value = "sale/add", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
+    public Customer addSaleInfo(@RequestBody Customer customer){
         return saleService.updateTotalSale(customer);
     }
 }

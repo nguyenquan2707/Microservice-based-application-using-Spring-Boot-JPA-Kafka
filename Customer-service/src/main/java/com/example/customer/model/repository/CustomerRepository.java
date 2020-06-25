@@ -25,16 +25,26 @@ public class CustomerRepository implements ICustomerDao {
 
     @Override
     public Customer deleteCustomer(Customer customer) {
-        return null;
+
+        entityManager.remove(customer);
+
+        return customer;
     }
 
     @Override
     public Customer getCustomer(String mobileNo) {
-        return null;
+
+        return entityManager.find(Customer.class, Long.parseLong(mobileNo));
     }
 
     @Override
     public Customer updateCustomer(Customer customer) {
-        return null;
+
+        Customer cus = getCustomer(customer.getMobile_no());
+
+        cus.setAddress(customer.getAddress());
+        cus.setName(customer.getName());
+
+        return entityManager.merge(cus);
     }
 }

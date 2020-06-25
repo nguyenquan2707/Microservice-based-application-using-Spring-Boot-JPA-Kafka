@@ -2,6 +2,7 @@ package com.example.customer.service;
 
 import com.example.customer.model.dao.ICustomerSaleDao;
 import com.example.customer.model.entity.Customer;
+import com.example.customer.model.entity.CustomerSale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +15,16 @@ public class CustomerSaleService {
     //getTotalSale
     public int getTotalSale(String mobileNo){
 
-        return saleDao.getCustomerSale(mobileNo).getTotal_sale();
+        return saleDao.getSale(mobileNo).getTotal_sale();
     }
 
 
     //updateSale
-    public int updateTotalSale(Customer customer){
+    public Customer updateTotalSale(Customer customer){
 
-        return saleDao.updateCustomerSale(customer.getSale()).getTotal_sale();
+        CustomerSale customerSale = saleDao.updateSale(customer.getSale());
+        customer.setSale(customerSale);
+
+        return customer;
     }
 }

@@ -9,15 +9,14 @@ import javax.persistence.*;
 public class CustomerSale {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
     long customer_id;
 
     @Column(name = "total_sale")
     int total_sale;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id")
+    @OneToOne
+    @MapsId
     @JsonIgnore
     private Customer customer;
 

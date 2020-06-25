@@ -4,7 +4,7 @@ import com.example.customer.model.entity.CustomerSale;
 
 public interface ICustomerSaleDao {
 
-    CustomerSale getCustomerSale(String mobileNo);
+    CustomerSale getSale(String mobileNo);
 
-    CustomerSale updateCustomerSale(CustomerSale customerSale);
+    CustomerSale updateSale(CustomerSale customerSale);
 }
