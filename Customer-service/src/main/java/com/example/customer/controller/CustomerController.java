@@ -42,8 +42,4 @@ public class CustomerController  {
         return saleService.updateTotalSale(customer);
     }
 
-    @RequestMapping(value = "sale/add", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
-    public Customer addSaleInfo(@RequestBody Customer customer){
-        return saleService.updateTotalSale(customer);
-    }
-}
+  }
