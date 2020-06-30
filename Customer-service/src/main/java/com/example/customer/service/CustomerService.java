@@ -15,8 +15,8 @@ public class CustomerService {
 
     //getCustomer
     public Customer getCustomer(String mobileNo){
-
-        return customerDao.getCustomer(mobileNo);
+        Customer customer = customerDao.getCustomer(mobileNo);
+        return customer;
     }
 
 

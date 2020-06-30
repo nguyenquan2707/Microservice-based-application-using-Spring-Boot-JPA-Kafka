@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Transactional
 @Repository
@@ -34,7 +35,11 @@ public class CustomerRepository implements ICustomerDao {
     @Override
     public Customer getCustomer(String mobileNo) {
 
-        return entityManager.find(Customer.class, Long.parseLong(mobileNo));
+        Query query = entityManager.createQuery("Select c from Customer c where c.mobile_no = "+mobileNo);
+
+        Customer customer = (Customer) query.getResultList().stream().findFirst().orElse(null);
+
+        return customer;
     }
 
     @Override
