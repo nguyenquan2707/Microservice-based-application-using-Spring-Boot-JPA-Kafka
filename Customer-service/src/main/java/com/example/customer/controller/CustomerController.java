@@ -1,10 +1,14 @@
 package com.example.customer.controller;
 
+import com.example.customer.exceptions.NoCutomerExistException;
 import com.example.customer.model.entity.Customer;
+import com.example.customer.model.entity.Response;
 import com.example.customer.service.CustomerSaleService;
 import com.example.customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,8 +32,22 @@ public class CustomerController  {
     }
 
     @RequestMapping(value = "view/{mobile_no}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public Customer getCustomer(@PathVariable String mobile_no){
-        return customerService.getCustomer(mobile_no);
+    public ResponseEntity<Response<Customer>> getCustomer(@PathVariable String mobile_no){
+
+        Response<Customer> response = new Response<>();
+        try {
+            Customer customer = customerService.getCustomer(mobile_no);
+
+            response.setSuccess(true);
+            response.setData(customer);
+
+        } catch (NoCutomerExistException e) {
+
+            response.setSuccess(false);
+            response.setMessage(e.toString());
+
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @RequestMapping(value = "sale/view/{mobile_no}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
