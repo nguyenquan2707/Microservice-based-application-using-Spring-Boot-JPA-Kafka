@@ -1,7 +1,8 @@
 package com.example.customer.controller;
 
-import com.example.customer.exceptions.NoCutomerExistException;
+import com.example.customer.exceptions.NoCustomerExistException;
 import com.example.customer.model.entity.Customer;
+import com.example.customer.model.entity.CustomerSale;
 import com.example.customer.model.entity.Response;
 import com.example.customer.service.CustomerSaleService;
 import com.example.customer.service.CustomerService;
@@ -19,11 +20,11 @@ public class CustomerController  {
     CustomerService customerService;
 
     @Autowired
-    CustomerSaleService saleService;
+    CustomerSaleService customerSaleService;
 
     @RequestMapping(value = "register", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public Customer register(@RequestBody Customer customer){
-      return customerService.registerCustomer(customer);
+        return customerService.registerCustomer(customer);
     }
 
     @RequestMapping(value = "un-register", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
@@ -41,7 +42,7 @@ public class CustomerController  {
             response.setSuccess(true);
             response.setData(customer);
 
-        } catch (NoCutomerExistException e) {
+        } catch (NoCustomerExistException e) {
 
             response.setSuccess(false);
             response.setMessage(e.toString());
@@ -51,13 +52,42 @@ public class CustomerController  {
     }
 
     @RequestMapping(value = "sale/view/{mobile_no}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public int getSaleInfo(@PathVariable String mobile_no){
-        return saleService.getTotalSale(mobile_no);
+    public ResponseEntity<Response<CustomerSale>> getSaleInfo(@PathVariable String mobile_no){
+
+        Response<CustomerSale> response = new Response<>();
+        try {
+            CustomerSale sale = customerSaleService.getTotalSale(mobile_no);
+
+            response.setSuccess(true);
+            response.setData(sale);
+
+        } catch (NoCustomerExistException e) {
+
+            response.setSuccess(false);
+            response.setMessage(e.toString());
+
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 
     @RequestMapping(value = "sale/update", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
-    public Customer updateSaleInfo(@RequestBody Customer customer){
-        return saleService.updateTotalSale(customer);
+    public ResponseEntity<Response<CustomerSale>> updateSaleInfo(@RequestBody CustomerSale customerSale){
+
+        Response<CustomerSale> response = new Response<>();
+        try {
+            CustomerSale sale = customerSaleService.updateTotalSale(customerSale);
+
+            response.setSuccess(true);
+            response.setData(sale);
+
+        } catch (NoCustomerExistException e) {
+
+            response.setSuccess(false);
+            response.setMessage(e.toString());
+
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-  }
+}

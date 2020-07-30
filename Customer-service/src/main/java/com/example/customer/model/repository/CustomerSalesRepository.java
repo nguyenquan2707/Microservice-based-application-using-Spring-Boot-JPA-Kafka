@@ -1,5 +1,6 @@
 package com.example.customer.model.repository;
 
+import com.example.customer.exceptions.NoCustomerExistException;
 import com.example.customer.model.dao.ICustomerDao;
 import com.example.customer.model.dao.ICustomerSaleDao;
 import com.example.customer.model.entity.Customer;
@@ -22,18 +23,28 @@ public class CustomerSalesRepository implements ICustomerSaleDao {
     ICustomerDao iCustomerDao;
 
     @Override
-    public CustomerSale getSale(String mobileNo) {
+    public CustomerSale getSale(String mobileNo) throws NoCustomerExistException {
 
+        //get customer from customer table
         Customer customer = iCustomerDao.getCustomer(mobileNo);
 
-        long customerId = customer.getId();
+        if(customer == null)
+            throw new NoCustomerExistException("No such customer exist with mobile no "+mobileNo);
 
+        //get customerId
+        long customerId = customer.getId();
+        //get sale info
         return entityManager.find(CustomerSale.class, customerId);
     }
 
     @Override
-    public CustomerSale updateSale(CustomerSale customerSale) {
+    public CustomerSale updateSale(CustomerSale customerSale) throws NoCustomerExistException{
 
+        //check if any sale info exist
+        if(entityManager.find(CustomerSale.class, customerSale.getCustomer_id()) == null)
+            throw new NoCustomerExistException("No such customer exist.");
+
+        //if exist then update
         return entityManager.merge(customerSale);
     }
 

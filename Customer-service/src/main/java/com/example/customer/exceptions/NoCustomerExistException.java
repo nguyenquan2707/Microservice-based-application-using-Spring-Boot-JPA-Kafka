@@ -1,10 +1,10 @@
 package com.example.customer.exceptions;
 
-public class NoCutomerExistException extends Exception {
+public class NoCustomerExistException extends Exception {
 
     String message;
 
-    public NoCutomerExistException(String message) {
+    public NoCustomerExistException(String message) {
         this.message = message;
     }
 

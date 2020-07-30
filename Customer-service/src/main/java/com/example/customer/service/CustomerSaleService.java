@@ -1,5 +1,7 @@
 package com.example.customer.service;
 
+import com.example.customer.exceptions.NoCustomerExistException;
+import com.example.customer.model.dao.ICustomerDao;
 import com.example.customer.model.dao.ICustomerSaleDao;
 import com.example.customer.model.entity.Customer;
 import com.example.customer.model.entity.CustomerSale;
@@ -12,19 +14,24 @@ public class CustomerSaleService {
     @Autowired
     ICustomerSaleDao saleDao;
 
-    //getTotalSale
-    public int getTotalSale(String mobileNo){
+    @Autowired
+    ICustomerDao customerDao;
 
-        return saleDao.getSale(mobileNo).getTotal_sale();
+    //getTotalSale
+    public CustomerSale getTotalSale(String mobileNo) throws NoCustomerExistException {
+
+        CustomerSale sale = saleDao.getSale(mobileNo);
+
+        return sale;
+
     }
 
 
     //updateSale
-    public Customer updateTotalSale(Customer customer){
+    public CustomerSale updateTotalSale(CustomerSale customerSale) throws NoCustomerExistException{
 
-        CustomerSale customerSale = saleDao.updateSale(customer.getSale());
-        customer.setSale(customerSale);
+        CustomerSale sale = saleDao.updateSale(customerSale);
 
-        return customer;
+        return sale;
     }
 }
