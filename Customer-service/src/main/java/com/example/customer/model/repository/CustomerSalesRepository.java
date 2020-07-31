@@ -42,7 +42,7 @@ public class CustomerSalesRepository implements ICustomerSaleDao {
 
         //check if any sale info exist
         if(entityManager.find(CustomerSale.class, customerSale.getCustomer_id()) == null)
-            throw new NoCustomerExistException("No such customer exist.");
+            throw new NoCustomerExistException("No such customer exist with id : "+customerSale.getCustomer_id());
 
         //if exist then update
         return entityManager.merge(customerSale);
