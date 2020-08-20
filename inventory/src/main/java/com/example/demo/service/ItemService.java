@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.InsufficientQuantityException;
 import com.example.demo.exception.ItemNotExistException;
 import com.example.demo.model.dao.IItemDao;
 import com.example.demo.model.entity.Item;
@@ -29,7 +30,7 @@ public class ItemService {
         //check item exist
         Item item = itemDao.getItem(id);
 
-        //it no , throw exception
+        //if no , throw exception
         if(item == null)
             throw new ItemNotExistException("No such item present in inventory.");
 
@@ -47,4 +48,30 @@ public class ItemService {
     }
 
     //issueItem(id, quantity)
+    public Item issueItem(long id, int issuedQuantity) throws ItemNotExistException, InsufficientQuantityException {
+        //check item exist
+        Item item = itemDao.getItem(id);
+
+        //if no , throw exception
+        if(item == null)
+            throw new ItemNotExistException("No such item present in inventory.");
+
+        //if yes get current quantity
+        int currentQuantity = item.getStock_quantity();
+
+        //if current quantity is less than required, throw exception
+        if(currentQuantity < issuedQuantity)
+            throw new InsufficientQuantityException("Not enough quantity is available in the inventory for "+item.getName());
+
+        //else update inventory
+        int updated_quantity = currentQuantity - issuedQuantity;
+
+        //update
+        item.setStock_quantity(updated_quantity);
+
+        itemDao.updateItem(item);
+
+        return item;
+
+    }
 }
