@@ -13,7 +13,7 @@ public class ItemService {
     @Autowired
     IItemDao itemDao;
 
-    //getItemDetail(id)
+    //get detail for a single item
     public Item getItemDetail(long id) throws ItemNotExistException {
 
         Item item = itemDao.getItem(id);
@@ -24,7 +24,7 @@ public class ItemService {
         return item;
     }
 
-    //receiveItem(id, quantity)
+    //insert/receive item for replenish inventory-stock into inventory
     public Item receiveItem(long id, int quantity) throws ItemNotExistException {
 
         //check item exist
@@ -47,7 +47,7 @@ public class ItemService {
         return item;
     }
 
-    //issueItem(id, quantity)
+    //issue item for replenish sale-stock from inventory
     public Item issueItem(long id, int issuedQuantity) throws ItemNotExistException, InsufficientQuantityException {
         //check item exist
         Item item = itemDao.getItem(id);
