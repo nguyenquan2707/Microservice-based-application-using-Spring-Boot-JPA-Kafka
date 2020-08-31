@@ -13,6 +13,23 @@ public class ItemService {
     @Autowired
     IItemDao itemDao;
 
+    //save new item
+    public Item saveItem(Item item){
+        return itemDao.addItem(item);
+    }
+
+    //update item
+    public Item updateItemInfo(Item item) throws ItemNotExistException {
+
+        //check item exist
+        Item it = getItemDetail(item.getId());
+
+        //if yes update
+        itemDao.updateItem(it);
+
+        return it;
+    }
+
     //get detail for a single item
     public Item getItemDetail(long id) throws ItemNotExistException {
 
@@ -28,21 +45,16 @@ public class ItemService {
     public Item receiveItem(long id, int quantity) throws ItemNotExistException {
 
         //check item exist
-        Item item = itemDao.getItem(id);
+        Item item = getItemDetail(id);
 
-        //if no , throw exception
-        if(item == null)
-            throw new ItemNotExistException("No such item present in inventory.");
-
-        //if yes update
+        //update
         int currentQuantity = item.getStock_quantity();
 
         int updated_quantity = currentQuantity + quantity;
 
-        //update
         item.setStock_quantity(updated_quantity);
 
-        itemDao.addItem(item);
+        itemDao.updateItem(item);
 
         return item;
     }
@@ -50,13 +62,9 @@ public class ItemService {
     //issue item for replenish sale-stock from inventory
     public Item issueItem(long id, int issuedQuantity) throws ItemNotExistException, InsufficientQuantityException {
         //check item exist
-        Item item = itemDao.getItem(id);
+        Item item =  getItemDetail(id);
 
-        //if no , throw exception
-        if(item == null)
-            throw new ItemNotExistException("No such item present in inventory.");
-
-        //if yes get current quantity
+        //get current quantity
         int currentQuantity = item.getStock_quantity();
 
         //if current quantity is less than required, throw exception
