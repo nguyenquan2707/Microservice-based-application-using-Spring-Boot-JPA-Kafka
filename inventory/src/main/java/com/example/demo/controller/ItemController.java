@@ -40,16 +40,11 @@ public class ItemController {
     public ResponseEntity<Response<Item>> updateItemDetail(@RequestBody Item item){
 
         Response<Item> response = new Response<>();
-        try {
-            Item updatedItem = itemService.updateItemInfo(item);
+        Item updatedItem = itemService.updateItemInfo(item);
 
-            response.setSuccess(true);
-            response.setData(updatedItem);
+        response.setSuccess(true);
+        response.setData(updatedItem);
 
-        }catch (ItemNotExistException e) {
-            response.setSuccess(false);
-            response.setMessage(e.toString());
-        }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -59,16 +54,12 @@ public class ItemController {
     public ResponseEntity<Response<Item>> getItemDetail(@PathVariable long itemId){
 
         Response<Item> response = new Response<>();
-        try {
-            Item item = itemService.getItemDetail(itemId);
 
-            response.setSuccess(true);
-            response.setData(item);
+        Item item = itemService.getItemDetail(itemId);
 
-        }catch (ItemNotExistException e) {
-            response.setSuccess(false);
-            response.setMessage(e.toString());
-        }
+        response.setSuccess(true);
+        response.setData(item);
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -79,16 +70,12 @@ public class ItemController {
     public ResponseEntity<Response<Item>> receiveItem(@PathVariable("itemId") int itemId, @RequestParam("q")int quantity){
 
         Response<Item> response = new Response<>();
-        try {
-            Item item = itemService.receiveItem(itemId, quantity);
 
-            response.setSuccess(true);
-            response.setData(item);
+        Item item = itemService.receiveItem(itemId, quantity);
 
-        } catch (ItemNotExistException e) {
-            response.setSuccess(false);
-            response.setMessage(e.toString());
-        }
+        response.setSuccess(true);
+        response.setData(item);
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -99,19 +86,12 @@ public class ItemController {
     public ResponseEntity<Response<Item>> issueItem(@PathVariable("itemId") int itemId, @RequestParam("q")int quantity){
 
         Response<Item> response = new Response<>();
-        try {
-            Item item = itemService.issueItem(itemId, quantity);
 
-            response.setSuccess(true);
-            response.setData(item);
+        Item item = itemService.issueItem(itemId, quantity);
 
-        } catch (ItemNotExistException e) {
-            response.setSuccess(false);
-            response.setMessage(e.toString());
-        } catch (InsufficientQuantityException e) {
-            response.setSuccess(false);
-            response.setMessage(e.toString());
-        }
+        response.setSuccess(true);
+        response.setData(item);
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

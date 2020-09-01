@@ -1,6 +1,6 @@
 package com.example.demo.exception;
 
-public class InsufficientQuantityException  extends Exception{
+public class InsufficientQuantityException  extends RuntimeException{
 
     String message;
 

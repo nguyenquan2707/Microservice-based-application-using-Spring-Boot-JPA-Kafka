@@ -19,19 +19,24 @@ public class ItemService {
     }
 
     //update item
-    public Item updateItemInfo(Item item) throws ItemNotExistException {
+    public Item updateItemInfo(Item item) {
 
         //check item exist
         Item it = getItemDetail(item.getId());
 
-        //if yes update
-        itemDao.updateItem(it);
+        it.setStock_quantity(item.getStock_quantity());
+        it.setName(item.getName());
+        it.setReorder_level(item.getReorder_level());
+        it.setTax_percentage(item.getTax_percentage());
+        it.setUnit(item.getUnit());
+        it.setUnit_price(item.getUnit_price());
 
-        return it;
+        //if yes update and return
+        return itemDao.updateItem(it);
     }
 
     //get detail for a single item
-    public Item getItemDetail(long id) throws ItemNotExistException {
+    public Item getItemDetail(long id) {
 
         Item item = itemDao.getItem(id);
 
@@ -42,7 +47,7 @@ public class ItemService {
     }
 
     //insert/receive item for replenish inventory-stock into inventory
-    public Item receiveItem(long id, int quantity) throws ItemNotExistException {
+    public Item receiveItem(long id, int quantity) {
 
         //check item exist
         Item item = getItemDetail(id);
@@ -60,7 +65,7 @@ public class ItemService {
     }
 
     //issue item for replenish sale-stock from inventory
-    public Item issueItem(long id, int issuedQuantity) throws ItemNotExistException, InsufficientQuantityException {
+    public Item issueItem(long id, int issuedQuantity) {
         //check item exist
         Item item =  getItemDetail(id);
 
