@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.exception.InsufficientQuantityException;
-import com.example.demo.exception.ItemNotExistException;
 import com.example.demo.model.entity.Item;
 import com.example.demo.model.entity.Response;
 import com.example.demo.service.ItemService;
@@ -10,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/item")
@@ -21,7 +21,7 @@ public class ItemController {
     //save new item
     //url : /item
     @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    public ResponseEntity<Response<Item>> saveItem(@RequestBody Item item){
+    public ResponseEntity<Response<Item>> saveItem(@Valid @RequestBody Item item){
 
         Item it = itemService.saveItem(item);
 

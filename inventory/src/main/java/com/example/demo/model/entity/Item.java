@@ -1,6 +1,8 @@
 package com.example.demo.model.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "item")
@@ -11,21 +13,27 @@ public class Item {
     @Column(name = "id")
     long id;
 
+    @NotBlank(message = "Name field can't be blank or missing")
     @Column(name = "name")
     String name;
 
+    @NotBlank(message = "Unit field can't be blank or missing")
     @Column(name = "unit")
     String unit;
 
+    @Min(value = 1, message = "Minimum stock field can't be missing or 0 or blank ")
     @Column(name = "stock_quantity")
     int stock_quantity;
 
+    @Min(value = 1, message = "Reorder level field can't be missing or 0 or blank")
     @Column(name = "reorder_level")
     int reorder_level;
 
+    @Min(value = 1, message = "Unit price field can't be missing or 0 or blank")
     @Column(name = "unit_price")
     int unit_price;
 
+    @Min(value = 1, message = "Tax percentage field can't be missing or 0 or blank")
     @Column(name = "tax_percentage")
     int tax_percentage;
 
