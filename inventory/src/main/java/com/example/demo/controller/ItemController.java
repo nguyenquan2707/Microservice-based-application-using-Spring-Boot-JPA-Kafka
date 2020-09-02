@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 @RestController
 @RequestMapping("/item")
@@ -37,7 +40,7 @@ public class ItemController {
     //update item
     //url : /item
     @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
-    public ResponseEntity<Response<Item>> updateItemDetail(@RequestBody Item item){
+    public ResponseEntity<Response<Item>> updateItemDetail(@Valid @RequestBody Item item){
 
         Response<Item> response = new Response<>();
         Item updatedItem = itemService.updateItemInfo(item);

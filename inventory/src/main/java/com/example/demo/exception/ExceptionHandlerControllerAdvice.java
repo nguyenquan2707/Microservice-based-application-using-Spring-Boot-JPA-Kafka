@@ -2,6 +2,7 @@ package com.example.demo.exception;
 
 import com.example.demo.model.entity.Item;
 import com.example.demo.model.entity.Response;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class ExceptionHandlerControllerAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Response<Item>> handleValidation(final MethodArgumentNotValidException ex) {
+    public ResponseEntity<Response<Item>> handleValidation(MethodArgumentNotValidException ex) {
 
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
@@ -59,6 +60,7 @@ public class ExceptionHandlerControllerAdvice {
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
   /* @Override
    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                  HttpHeaders headers, HttpStatus status, WebRequest request) {
