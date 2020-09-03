@@ -11,7 +11,8 @@
 
     <modules>
         <module>Customer-service</module>
-        <module>inventory</module>
+        <module>Inventory</module>
+        <module>Sales</module>
     </modules>
 
 
