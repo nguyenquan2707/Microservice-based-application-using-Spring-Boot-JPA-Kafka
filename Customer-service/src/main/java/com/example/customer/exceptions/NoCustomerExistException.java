@@ -1,6 +1,6 @@
 package com.example.customer.exceptions;
 
-public class NoCustomerExistException extends Exception {
+public class NoCustomerExistException extends RuntimeException {
 
     String message;
 

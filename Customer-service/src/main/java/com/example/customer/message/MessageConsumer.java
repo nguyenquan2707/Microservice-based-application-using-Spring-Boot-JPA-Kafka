@@ -1,8 +1,6 @@
 package com.example.customer.message;
 
-import com.example.customer.exceptions.NoCustomerExistException;
 import com.example.customer.model.dao.ICustomerSaleDao;
-import com.example.customer.model.entity.Customer;
 import com.example.customer.model.entity.CustomerSale;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,8 +31,6 @@ public class MessageConsumer {
             iCustomerSaleDao.updateSale(sale);
 
         } catch (JsonProcessingException e) {
-            logger.error(e.getMessage(),e);
-        } catch (NoCustomerExistException e) {
             logger.error(e.getMessage(),e);
         }
 

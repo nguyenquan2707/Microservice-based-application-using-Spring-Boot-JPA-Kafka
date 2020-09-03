@@ -7,7 +7,7 @@ public interface ICustomerDao {
 
     Customer addCustomer(Customer customer);
 
-    Customer deleteCustomer(Customer customer);
+    Customer deleteCustomer(String mobileNo);
 
     Customer getCustomer(String mobileNo) throws NoCustomerExistException;
 

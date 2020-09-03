@@ -3,6 +3,7 @@ package com.example.customer.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "customer_vs_total_sale")
@@ -12,6 +13,7 @@ public class CustomerSale {
     @Column(name = "customer_id")
     long customer_id;
 
+    @Min(value = 0, message = "Total sale field can't be missing or blank or negative value")
     @Column(name = "total_sale")
     int total_sale;
 

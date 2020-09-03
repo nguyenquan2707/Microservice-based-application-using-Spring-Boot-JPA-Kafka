@@ -1,8 +1,7 @@
 package com.example.customer.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "customer")
@@ -13,12 +12,15 @@ public class Customer {
     @Column(name = "id")
     long id;
 
+    @NotBlank(message = "Name field can't be blank or missing")
     @Column(name = "name")
     String name;
 
+    @NotBlank(message = "Mobile no field can't be blank or missing")
     @Column(name = "mobile_no")
     String mobile_no;
 
+    @NotBlank(message = "Address field can't be blank or missing")
     @Column(name = "address")
     String address;
 

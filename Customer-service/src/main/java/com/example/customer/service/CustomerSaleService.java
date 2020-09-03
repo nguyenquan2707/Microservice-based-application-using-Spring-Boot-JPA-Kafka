@@ -1,9 +1,7 @@
 package com.example.customer.service;
 
 import com.example.customer.exceptions.NoCustomerExistException;
-import com.example.customer.model.dao.ICustomerDao;
 import com.example.customer.model.dao.ICustomerSaleDao;
-import com.example.customer.model.entity.Customer;
 import com.example.customer.model.entity.CustomerSale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,13 +12,13 @@ public class CustomerSaleService {
     @Autowired
     ICustomerSaleDao saleDao;
 
-    @Autowired
-    ICustomerDao customerDao;
-
     //getTotalSale
-    public CustomerSale getTotalSale(String mobileNo) throws NoCustomerExistException {
+    public CustomerSale getTotalSale(String mobileNo) {
 
         CustomerSale sale = saleDao.getSale(mobileNo);
+
+        if(sale ==  null)
+            throw new NoCustomerExistException("No record found for customer with mobile no : "+mobileNo);
 
         return sale;
 
@@ -28,9 +26,12 @@ public class CustomerSaleService {
 
 
     //updateSale
-    public CustomerSale updateTotalSale(CustomerSale customerSale) throws NoCustomerExistException{
+    public CustomerSale updateTotalSale(CustomerSale customerSale) {
 
         CustomerSale sale = saleDao.updateSale(customerSale);
+
+        if(sale == null)
+            throw new NoCustomerExistException("No record found for customer with id : "+customerSale.getCustomer_id());
 
         return sale;
     }

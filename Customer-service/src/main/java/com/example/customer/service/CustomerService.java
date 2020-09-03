@@ -15,7 +15,8 @@ public class CustomerService {
     ICustomerDao customerDao;
 
     //getCustomer
-    public Customer getCustomer(String mobileNo) throws NoCustomerExistException {
+    public Customer getCustomer(String mobileNo){
+
         Customer customer = customerDao.getCustomer(mobileNo);
 
         if(customer == null)
@@ -28,15 +29,29 @@ public class CustomerService {
     //registerCustomer
     public Customer registerCustomer(Customer customer){
 
-        CustomerSale customerSale = customer.getSale();
-        customer.setSale(customerSale);
+        // check already present
+        Customer cust = customerDao.getCustomer(customer.getMobile_no());
+
+        //if present, update
+        if(cust != null)
+            return customerDao.updateCustomer(cust);
+
+        // if not present , save new
+        CustomerSale sale = new CustomerSale();
+        customer.setSale(sale);
 
         return customerDao.addCustomer(customer);
     }
 
     //unregisterCustomer
-    public Customer unRegisterCustomer(Customer customer){
+    public Customer unRegisterCustomer(String mobileNo){
 
-        return customerDao.deleteCustomer(customer);
+        Customer customer = customerDao.deleteCustomer(mobileNo);
+
+        if(customer == null)
+            throw new NoCustomerExistException("No such customer exist with mobile no "+mobileNo);
+
+        return customer;
     }
 }
+

@@ -25,7 +25,12 @@ public class CustomerRepository implements ICustomerDao {
     }
 
     @Override
-    public Customer deleteCustomer(Customer customer) {
+    public Customer deleteCustomer(String mobileNo) {
+
+        Customer customer = getCustomer(mobileNo);
+
+        if(customer == null)
+            return null;
 
         entityManager.remove(customer);
 
