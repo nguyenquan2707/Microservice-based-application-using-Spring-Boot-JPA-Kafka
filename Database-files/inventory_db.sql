@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 30, 2020 at 09:05 AM
+-- Generation Time: Sep 03, 2020 at 01:46 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -37,6 +37,37 @@ CREATE TABLE `item` (
   `unit_price` int(5) NOT NULL,
   `tax_percentage` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
+
+--
+-- Dumping data for table `item`
+--
+
+INSERT INTO `item` (`id`, `name`, `unit`, `stock_quantity`, `reorder_level`, `unit_price`, `tax_percentage`) VALUES
+(1, 'Amul Milk', 'ltr', 510, 450, 21, 5),
+(2, 'Mother dairy Milk', 'ltr', 300, 250, 22, 1),
+(3, 'Bhagirathi Milk', 'ltr', 1000, 950, 21, 2),
+(7, 'Almond Milk', 'ltr', 100, 90, 70, 3),
+(9, 'Butter Milk', 'ltr', 100, 90, 70, 3);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `item`
+--
+ALTER TABLE `item`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `item`
+--
+ALTER TABLE `item`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
