@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 30, 2020 at 09:05 AM
--- Server version: 10.1.33-MariaDB
--- PHP Version: 7.2.6
+-- Generation Time: Sep 14, 2020 at 08:10 AM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -51,6 +50,19 @@ CREATE TABLE `cheque_payment` (
   `cheque_no` int(20) NOT NULL,
   `cheque_date` date NOT NULL,
   `amount` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf32;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE `customer` (
+  `id` int(5) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `mobile_no` varchar(15) NOT NULL,
+  `address` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
@@ -131,6 +143,12 @@ ALTER TABLE `cheque_payment`
   ADD KEY `cheque_payment_ibfk_1` (`order_id`);
 
 --
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `customer_vs_total_sale`
 --
 ALTER TABLE `customer_vs_total_sale`
@@ -147,7 +165,7 @@ ALTER TABLE `item`
 --
 ALTER TABLE `order`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `orders_ibfk_1` (`customerId`);
+  ADD KEY `customerId` (`customerId`);
 
 --
 -- Indexes for table `orderLine`
@@ -171,6 +189,12 @@ ALTER TABLE `card_payment`
 -- AUTO_INCREMENT for table `cheque_payment`
 --
 ALTER TABLE `cheque_payment`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `customer`
+--
+ALTER TABLE `customer`
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
 
 --
@@ -208,9 +232,16 @@ ALTER TABLE `cheque_payment`
   ADD CONSTRAINT `cheque_payment_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`);
 
 --
+-- Constraints for table `customer_vs_total_sale`
+--
+ALTER TABLE `customer_vs_total_sale`
+  ADD CONSTRAINT `customer_vs_total_sale_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `order`
 --
 ALTER TABLE `order`
+  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`customerId`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customerId`) REFERENCES `customer_vs_total_sale` (`customer_id`) ON DELETE CASCADE;
 
 --
