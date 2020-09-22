@@ -30,6 +30,17 @@ public class ChequePayment {
     @Column(name = "amount")
     int amount;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    Order order;
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
     public long getId() {
         return id;
     }

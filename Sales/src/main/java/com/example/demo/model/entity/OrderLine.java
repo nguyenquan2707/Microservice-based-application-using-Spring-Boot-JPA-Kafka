@@ -14,9 +14,6 @@ public class OrderLine {
     @Column(name = "amount")
     int amount;
 
-    @Column(name = "itemId")
-    long itemId;
-
     @Column(name = "line_total")
     int lineTotal;
 
@@ -35,6 +32,28 @@ public class OrderLine {
     @Column(name = "unit_cost")
     int unitCost;
 
+    @OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinColumn(name="itemId")
+    Item item;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    Order order;
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 
     public long getId() {
         return id;
@@ -50,14 +69,6 @@ public class OrderLine {
 
     public void setAmount(int amount) {
         this.amount = amount;
-    }
-
-    public long getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(long itemId) {
-        this.itemId = itemId;
     }
 
     public int getLineTotal() {
