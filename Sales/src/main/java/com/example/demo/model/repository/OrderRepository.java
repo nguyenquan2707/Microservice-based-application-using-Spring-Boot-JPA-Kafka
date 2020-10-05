@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Transactional
 @Repository
@@ -21,9 +23,18 @@ public class OrderRepository {
         return order;
     }
 
-    public Order getOrder(long orderId) {
+    public Order getOrderByID(long orderId) {
 
         return entityManager.find(Order.class, orderId);
+    }
+
+    public List<Order> getOrderList(long customerId) {
+
+        Query query = entityManager.createQuery("Select o from Order o where o.customerId = "+customerId);
+
+        List<Order> orders = query.getResultList();
+
+        return orders;
     }
 
     public Order updateOrder(Order order) {
@@ -33,7 +44,7 @@ public class OrderRepository {
 
     public Order deleteOrder(long orderId) {
 
-        Order order = getOrder(orderId);
+        Order order = getOrderByID(orderId);
 
         entityManager.remove(order);
 
