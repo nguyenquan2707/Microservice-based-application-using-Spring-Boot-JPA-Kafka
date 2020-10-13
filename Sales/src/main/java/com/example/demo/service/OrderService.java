@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.exception.NoCustomerExistException;
 import com.example.demo.exception.OrderNotFoundExcedption;
 import com.example.demo.model.entity.Customer;
 import com.example.demo.model.entity.CustomerSale;
@@ -81,9 +80,6 @@ public class OrderService {
         //get customer
         Customer customer = customerService.getCustomer(customerMobileNo);
 
-        if(customer == null)
-            throw new NoCustomerExistException("No customer found with this mobile no.");
-
         //get order list
         List<Order> orderList = orderRepository.getOrderList(customer.getId());
 
@@ -107,9 +103,6 @@ public class OrderService {
     public List<Order> getAllOrder(String mobileNo){
 
         Customer customer = customerService.getCustomer(mobileNo);
-
-        if(customer == null)
-            throw new NoCustomerExistException("No customer found with this mobile no.");
 
         return orderRepository.getOrderList(customer.getId());
     }
