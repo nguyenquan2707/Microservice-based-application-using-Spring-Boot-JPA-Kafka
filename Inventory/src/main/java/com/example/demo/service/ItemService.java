@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.exception.InsufficientQuantityException;
 import com.example.demo.exception.ItemNotFoundException;
+import com.example.demo.exception.NoItemFoundException;
 import com.example.demo.model.dao.IItemDao;
 import com.example.demo.model.entity.Item;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,9 @@ public class ItemService {
     public List<Item> getAllItems() {
 
         List<Item> items = itemDao.getItemAll();
+
+        if(items.size() == 0)
+            throw new NoItemFoundException("No item left in the inventory.");
 
         return items;
     }
