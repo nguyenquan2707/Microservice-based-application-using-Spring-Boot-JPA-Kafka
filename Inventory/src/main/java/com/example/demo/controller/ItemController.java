@@ -49,7 +49,7 @@ public class ItemController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    //getItemDetail(id)
+    //getItemById(id)
     //url : /item/12345
     @RequestMapping(value = "/{itemId}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public ResponseEntity<Response<Item>> getItemById(@PathVariable long itemId){
@@ -64,7 +64,7 @@ public class ItemController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    //getItemDetail(id)
+    //getItemAll()
     //url : /item/all
     @RequestMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public ResponseEntity<Response<List<Item>>> getItemAll(){
