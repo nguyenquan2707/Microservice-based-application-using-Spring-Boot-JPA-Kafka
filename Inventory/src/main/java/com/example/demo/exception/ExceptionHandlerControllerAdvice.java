@@ -16,9 +16,9 @@ import java.util.Map;
 @ControllerAdvice
 public class ExceptionHandlerControllerAdvice {
 
-    @ExceptionHandler(ItemNotExistException.class)
+    @ExceptionHandler(ItemNotFoundException.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<Response<Item>> handleItemNotFoundException(ItemNotExistException ex) {
+    public ResponseEntity<Response<Item>> handleItemNotFoundException(ItemNotFoundException ex) {
 
         Response response = new Response();
         response.setMessage(ex.toString());
