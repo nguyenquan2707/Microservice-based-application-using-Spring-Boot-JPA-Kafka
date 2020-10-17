@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/item")
@@ -37,7 +38,7 @@ public class ItemController {
     //update item
     //url : /item
     @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
-    public ResponseEntity<Response<Item>> updateItemDetail(@Valid @RequestBody Item item){
+    public ResponseEntity<Response<Item>> updateItem(@Valid @RequestBody Item item){
 
         Response<Item> response = new Response<>();
         Item updatedItem = itemService.updateItemInfo(item);
@@ -51,7 +52,7 @@ public class ItemController {
     //getItemDetail(id)
     //url : /item/12345
     @RequestMapping(value = "/{itemId}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public ResponseEntity<Response<Item>> getItemDetail(@PathVariable long itemId){
+    public ResponseEntity<Response<Item>> getItemById(@PathVariable long itemId){
 
         Response<Item> response = new Response<>();
 
@@ -59,6 +60,21 @@ public class ItemController {
 
         response.setSuccess(true);
         response.setData(item);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    //getItemDetail(id)
+    //url : /item/all
+    @RequestMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public ResponseEntity<Response<List<Item>>> getItemAll(){
+
+        Response<List<Item>> response = new Response<>();
+
+        List<Item> itemList = itemService.getAllItems();
+
+        response.setSuccess(true);
+        response.setData(itemList);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -88,6 +104,22 @@ public class ItemController {
         Response<Item> response = new Response<>();
 
         Item item = itemService.issueItem(itemId, quantity);
+
+        response.setSuccess(true);
+        response.setData(item);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    //removeItem(id, quantity)
+    //url : /item/12345
+    @RequestMapping(value = "/{itemId}", produces = MediaType.APPLICATION_JSON_VALUE, method =
+            RequestMethod.DELETE)
+    public ResponseEntity<Response<Item>> removeItem(@PathVariable("itemId") int itemId){
+
+        Response<Item> response = new Response<>();
+
+        Item item = itemService.removeItemById(itemId);
 
         response.setSuccess(true);
         response.setData(item);

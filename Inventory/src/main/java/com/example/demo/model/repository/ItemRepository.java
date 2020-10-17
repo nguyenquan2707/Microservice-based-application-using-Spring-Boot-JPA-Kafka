@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.List;
 
 
 @Repository
@@ -29,7 +31,8 @@ public class ItemRepository implements IItemDao {
 
         Item item = getItem(itemId);
 
-        entityManager.remove(item);
+        if(item != null)
+            entityManager.remove(item);
 
         return item;
     }
@@ -38,6 +41,14 @@ public class ItemRepository implements IItemDao {
     public Item getItem(long itemId) {
 
         return entityManager.find(Item.class, itemId);
+    }
+
+    @Override
+    public List<Item> getItemAll() {
+
+        Query query = entityManager.createQuery("Select i from Item i");
+
+        return query.getResultList();
     }
 
     @Override

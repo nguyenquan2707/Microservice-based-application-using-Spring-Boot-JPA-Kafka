@@ -1,11 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.exception.InsufficientQuantityException;
-import com.example.demo.exception.ItemNotExistException;
+import com.example.demo.exception.ItemNotFoundException;
 import com.example.demo.model.dao.IItemDao;
 import com.example.demo.model.entity.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ItemService {
@@ -41,9 +43,17 @@ public class ItemService {
         Item item = itemDao.getItem(id);
 
         if(item == null)
-            throw new ItemNotExistException("No such item present in inventory.");
+            throw new ItemNotFoundException("No such item present in inventory.");
 
         return item;
+    }
+
+    //get list of all items in db
+    public List<Item> getAllItems() {
+
+        List<Item> items = itemDao.getItemAll();
+
+        return items;
     }
 
     //insert/receive item for replenish inventory-stock into inventory
@@ -86,5 +96,15 @@ public class ItemService {
 
         return item;
 
+    }
+
+    //remove item from inventory
+    public Item removeItemById(long itemId){
+       Item item = itemDao.deleteItem(itemId);
+
+       if(item == null)
+           throw new ItemNotFoundException("No such item present in inventory.");
+
+       return item;
     }
 }

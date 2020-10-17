@@ -1,10 +1,10 @@
 package com.example.demo.exception;
 
-public class ItemNotExistException extends RuntimeException {
+public class ItemNotFoundException extends RuntimeException {
 
     String message;
 
-    public ItemNotExistException(String message) {
+    public ItemNotFoundException(String message) {
         this.message = message;
     }
 
