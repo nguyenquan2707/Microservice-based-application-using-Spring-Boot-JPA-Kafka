@@ -4,12 +4,12 @@ import com.example.demo.model.entity.Customer;
 import com.example.demo.model.entity.CustomerSale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-@Transactional
 @Repository
 public class CustomerSalesRepository {
 
@@ -19,6 +19,7 @@ public class CustomerSalesRepository {
     @Autowired
     CustomerRepository customerRepository;
 
+    @Transactional(propagation = Propagation.SUPPORTS)
     public CustomerSale getSale(String mobileNo){
 
         //get customer from customer table
@@ -33,6 +34,7 @@ public class CustomerSalesRepository {
         return entityManager.find(CustomerSale.class, customerId);
     }
 
+    @Transactional(propagation = Propagation.MANDATORY)
     public CustomerSale updateSale(CustomerSale customerSale){
 
         //check if any sale info exist
