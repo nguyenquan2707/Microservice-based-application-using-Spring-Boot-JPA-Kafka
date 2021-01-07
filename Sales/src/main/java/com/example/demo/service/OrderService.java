@@ -1,9 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.InsufficientQuantityException;
 import com.example.demo.exception.OrderNotFoundExcedption;
-import com.example.demo.model.entity.Customer;
-import com.example.demo.model.entity.CustomerSale;
-import com.example.demo.model.entity.Order;
+import com.example.demo.model.entity.*;
 import com.example.demo.model.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +22,9 @@ public class OrderService {
     @Autowired
     CustomerSaleService saleService;
 
+    @Autowired
+    ItemService itemService;
+
     @Transactional
     public Order registerOrder(Order order){
 
@@ -36,6 +38,27 @@ public class OrderService {
 
         //save order
         Order ord = orderRepository.saveOrder(order);
+
+        //update individual item stock quantity
+        List<OrderLine> orderLineList = ord.getOrderLines();
+
+        for(OrderLine orderLine : orderLineList){
+
+            Item item = orderLine.getItem();
+
+            int currentQuantityInStock = itemService.getItemDetail(item.getId()).getStockQuantity();
+
+            int quantityOrdered = orderLine.getQuantity();
+
+            if(quantityOrdered > currentQuantityInStock)
+                throw new InsufficientQuantityException("Not enough quantity for "+item.getName());
+
+            int updatedQuantity = currentQuantityInStock - quantityOrdered;
+
+            item.setStockQuantity(updatedQuantity);
+
+            itemService.updateItem(item);
+        }
 
         //update sale info for this particular customer
         CustomerSale customerSale = customer.getSale();
