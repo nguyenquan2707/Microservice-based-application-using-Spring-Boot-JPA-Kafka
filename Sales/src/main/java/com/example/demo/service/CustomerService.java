@@ -6,6 +6,8 @@ import com.example.demo.model.entity.CustomerSale;
 import com.example.demo.model.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CustomerService {
@@ -14,6 +16,7 @@ public class CustomerService {
     CustomerRepository repository;
 
     //getCustomer
+    @Transactional(propagation = Propagation.SUPPORTS)
     public Customer getCustomer(String mobileNo){
 
         Customer customer = repository.getCustomerByMobileNo(mobileNo);
@@ -25,6 +28,7 @@ public class CustomerService {
 
 
     //registerCustomer
+    @Transactional(propagation = Propagation.REQUIRED)
     public Customer registerCustomer(Customer customer){
 
         // check already present

@@ -2,19 +2,20 @@ package com.example.demo.model.repository;
 
 import com.example.demo.model.entity.Customer;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-@Transactional
 @Repository
 public class CustomerRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Transactional(propagation = Propagation.MANDATORY)
     public Customer addCustomer(Customer customer) {
 
         entityManager.persist(customer);
@@ -22,6 +23,7 @@ public class CustomerRepository {
         return customer;
     }
 
+    @Transactional(propagation = Propagation.MANDATORY)
     public Customer deleteCustomer(String mobileNo) {
 
         Customer customer = getCustomerByMobileNo(mobileNo);
@@ -34,6 +36,7 @@ public class CustomerRepository {
         return customer;
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
     public Customer getCustomerByMobileNo(String mobileNo) {
 
         Query query = entityManager.createQuery("Select c from Customer c where c.mobile_no = "+mobileNo);
@@ -43,6 +46,7 @@ public class CustomerRepository {
         return customer;
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
     public Customer getCustomerById(long id) {
 
         Customer customer = entityManager.find(Customer.class, id);
@@ -50,7 +54,7 @@ public class CustomerRepository {
         return customer;
     }
 
-
+    @Transactional(propagation = Propagation.MANDATORY)
     public Customer updateCustomer(Customer customer) {
 
         Customer cus = getCustomerById(customer.getId());
