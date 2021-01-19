@@ -18,7 +18,47 @@ public class ExceptionHandlerControllerAdvice {
 
     @ExceptionHandler(NoCustomerExistException.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<Response<Customer>> handleItemNotFoundException(NoCustomerExistException ex) {
+    public ResponseEntity<Response<Customer>> handleCustomerNotFoundException(NoCustomerExistException ex) {
+
+        Response response = new Response();
+        response.setMessage(ex.toString());
+        response.setSuccess(false);
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ItemNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<Response<Customer>> handleItemNotFoundException(ItemNotFoundException ex) {
+
+        Response response = new Response();
+        response.setMessage(ex.toString());
+        response.setSuccess(false);
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(InsufficientQuantityException.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<Response<Customer>> handleCustomerNotFoundException(InsufficientQuantityException ex) {
+
+        Response response = new Response();
+        response.setMessage(ex.toString());
+        response.setSuccess(false);
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(NoItemFoundException.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<Response<Customer>> handleItemNotFoundException(NoItemFoundException ex) {
+
+        Response response = new Response();
+        response.setMessage(ex.toString());
+        response.setSuccess(false);
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(OrderNotFoundExcedption.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<Response<Customer>> handleCustomerNotFoundException(OrderNotFoundExcedption ex) {
 
         Response response = new Response();
         response.setMessage(ex.toString());
