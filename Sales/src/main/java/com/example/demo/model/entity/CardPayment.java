@@ -11,9 +11,6 @@ public class CardPayment {
     @Column(name = "id")
     long id;
 
-    @Column(name = "order_id")
-    long orderId;
-
     @Column(name = "issuing_bank")
     String issuingBank;
 
@@ -27,6 +24,7 @@ public class CardPayment {
     int amount;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
     Order order;
 
     public Order getOrder() {
@@ -43,14 +41,6 @@ public class CardPayment {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
     }
 
     public String getIssuingBank() {

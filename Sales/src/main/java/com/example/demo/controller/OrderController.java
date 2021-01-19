@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -112,6 +113,22 @@ public class OrderController {
         response.setData(item);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    //save new item
+    //url : /order/item
+    @RequestMapping(value = "/item", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity<Response<Item>> saveItem(@RequestBody Item item){
+
+        Item it = itemService.saveItem(item);
+
+        Response<Item> response = new Response<>();
+
+        response.setSuccess(true);
+        response.setData(it);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 
     //getItemAll(id)
