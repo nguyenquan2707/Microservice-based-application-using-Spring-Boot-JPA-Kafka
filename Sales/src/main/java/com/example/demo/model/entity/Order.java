@@ -1,10 +1,13 @@
 package com.example.demo.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "\"order\"")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Order {
 
     @Id
@@ -21,7 +24,7 @@ public class Order {
     @Column(name = "total")
     int total;
 
-    @OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="customerId")
     Customer customer;
 

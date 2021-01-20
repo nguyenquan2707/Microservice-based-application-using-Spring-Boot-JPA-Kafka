@@ -1,5 +1,7 @@
 package com.example.demo.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -24,7 +26,7 @@ public class CardPayment {
     int amount;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
+    @JsonIgnore
     Order order;
 
     public Order getOrder() {

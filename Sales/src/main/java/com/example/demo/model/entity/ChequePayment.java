@@ -1,5 +1,7 @@
 package com.example.demo.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,7 +12,6 @@ public class ChequePayment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     long id;
-
 
     @Column(name = "bank_name")
     String bankName;
@@ -28,7 +29,7 @@ public class ChequePayment {
     int amount;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
+    @JsonIgnore
     Order order;
 
     public Order getOrder() {

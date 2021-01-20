@@ -34,6 +34,7 @@ public class OrderService {
         //if new, register first
         if(customer.getId() == 0){
             customer = customerService.registerCustomer(customer);
+            order.setCustomer(customer);
         }
 
         //save order
@@ -65,7 +66,7 @@ public class OrderService {
 
         int currentSale = customerSale.getTotal_sale();
 
-        customerSale.setTotal_sale(currentSale ++);
+        customerSale.setTotal_sale(++currentSale);
 
         saleService.updateTotalSale(customerSale);
 

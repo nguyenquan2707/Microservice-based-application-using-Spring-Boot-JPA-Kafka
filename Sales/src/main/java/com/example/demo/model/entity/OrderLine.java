@@ -1,5 +1,7 @@
 package com.example.demo.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -23,19 +25,31 @@ public class OrderLine {
     @Column(name = "tax_amount")
     int taxAmount;
 
+    @Column(name = "tax_percentage")
+    int taxPercentage;
+
     @Column(name = "unit")
     String unit;
 
     @Column(name = "unit_cost")
     int unitCost;
 
-    @OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="itemId")
     Item item;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "orderId")
+    @JsonIgnore
     Order order;
+
+    public int getTaxPercentage() {
+        return taxPercentage;
+    }
+
+    public void setTaxPercentage(int taxPercentage) {
+        this.taxPercentage = taxPercentage;
+    }
 
     public Item getItem() {
         return item;
