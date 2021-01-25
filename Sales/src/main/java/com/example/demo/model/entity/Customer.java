@@ -2,6 +2,7 @@ package com.example.demo.model.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 @Table(name = "customer")
@@ -30,6 +31,23 @@ public class Customer {
             fetch = FetchType.LAZY)
     private CustomerSale sale;
 
+    @OneToMany(
+            mappedBy = "customer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Order> orderList;
+
+    public List<Order> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        for(Order order : orderList){
+            order.setCustomer(this);
+        }
+        this.orderList = orderList;
+    }
 
     public Customer() {
         super();

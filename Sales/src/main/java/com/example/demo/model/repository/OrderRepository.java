@@ -33,7 +33,7 @@ public class OrderRepository {
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<Order> getOrderList(long customerId) {
 
-        Query query = entityManager.createQuery("Select o from Order o where o.customerId = "+customerId);
+        Query query = entityManager.createQuery("Select o from Order o where o.customer.id = "+customerId);
 
         List<Order> orders = query.getResultList();
 

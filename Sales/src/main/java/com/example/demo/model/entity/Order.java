@@ -1,5 +1,6 @@
 package com.example.demo.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
@@ -24,8 +25,9 @@ public class Order {
     @Column(name = "total")
     int total;
 
-    @OneToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="customerId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customerId")
+    @JsonIgnore
     Customer customer;
 
     @OneToMany(
