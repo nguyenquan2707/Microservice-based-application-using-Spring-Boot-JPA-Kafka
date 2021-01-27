@@ -1,5 +1,6 @@
 package com.example.demo.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "\"order\"")
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Order {
 
     @Id
@@ -27,7 +28,6 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerId")
-    @JsonIgnore
     Customer customer;
 
     @OneToMany(

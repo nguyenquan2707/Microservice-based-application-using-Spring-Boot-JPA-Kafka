@@ -1,5 +1,7 @@
 package com.example.demo.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -34,8 +36,10 @@ public class Customer {
     @OneToMany(
             mappedBy = "customer",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
     )
+    @JsonBackReference
     private List<Order> orderList;
 
     public List<Order> getOrderList() {
