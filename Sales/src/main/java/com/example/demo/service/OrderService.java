@@ -107,6 +107,9 @@ public class OrderService {
         //get order list
         List<Order> orderList = orderRepository.getOrderList(customer.getId());
 
+        if(orderList.size() == 0)
+            throw new OrderNotFoundExcedption("No order found for : " + customerMobileNo);
+
         //remove orders
         for(Order order : orderList){
             orderRepository.deleteOrder(order.getId());
@@ -128,6 +131,11 @@ public class OrderService {
 
         Customer customer = customerService.getCustomer(mobileNo);
 
-        return orderRepository.getOrderList(customer.getId());
+        List<Order> orderList = orderRepository.getOrderList(customer.getId());
+
+        if(orderList.size() == 0)
+            throw new OrderNotFoundExcedption("No order found for " + mobileNo);
+
+        return orderList;
     }
 }
