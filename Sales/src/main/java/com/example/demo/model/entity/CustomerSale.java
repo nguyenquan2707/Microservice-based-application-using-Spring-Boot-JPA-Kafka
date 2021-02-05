@@ -1,5 +1,6 @@
 package com.example.demo.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ public class CustomerSale {
 
     @OneToOne
     @MapsId
-    @JsonIgnore
+    @JsonBackReference
     private Customer customer;
 
     public CustomerSale() {

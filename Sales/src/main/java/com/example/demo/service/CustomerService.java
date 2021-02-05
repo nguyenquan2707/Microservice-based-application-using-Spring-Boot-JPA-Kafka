@@ -31,14 +31,6 @@ public class CustomerService {
     @Transactional(propagation = Propagation.REQUIRED)
     public Customer registerCustomer(Customer customer){
 
-        // check already present
-        Customer cust = repository.getCustomerByMobileNo(customer.getMobile_no());
-
-        //if present, update
-        if(cust != null)
-            return repository.updateCustomer(cust);
-
-        // if not present , save new
         CustomerSale sale = new CustomerSale();
         customer.setSale(sale);
 
