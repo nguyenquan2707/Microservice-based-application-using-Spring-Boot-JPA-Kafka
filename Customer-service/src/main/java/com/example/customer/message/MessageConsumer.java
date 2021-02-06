@@ -16,10 +16,9 @@ import org.springframework.stereotype.Service;
 public class MessageConsumer {
     private static final Logger logger = LoggerFactory.getLogger(MessageProducer.class);
 
-    private final String TOPIC_UPDATE_SALE_INFO ="updateSaleInfoCallback";
+    private final String TOPIC_UPDATE_SALE_INFO ="topic_update_sale";
 
-    private final String TOPIC_REGISTER_NEW_CUSTOMER ="regNewCustomerCallback";
-
+    private final String TOPIC_REGISTER_NEW_CUSTOMER ="topic_register_new_customer";
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -31,7 +30,7 @@ public class MessageConsumer {
     ICustomerDao iCustomerDao;
 
     @KafkaListener(topics = TOPIC_UPDATE_SALE_INFO)
-    void updateSaleInfoCallback(String message){
+    void consumeMessageOnUpdateSaleInfo(String message){
 
         try {
             CustomerSale sale = objectMapper.readValue(message, CustomerSale.class);
@@ -45,7 +44,7 @@ public class MessageConsumer {
     }
 
     @KafkaListener(topics = TOPIC_REGISTER_NEW_CUSTOMER)
-    void regNewCustomerCallback(String message){
+    void consumeMessageOnRegisterNewCustomer(String message){
 
         try {
             Customer customer = objectMapper.readValue(message, Customer.class);
