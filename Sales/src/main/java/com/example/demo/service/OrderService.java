@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.exception.InsufficientQuantityException;
 import com.example.demo.exception.OrderNotFoundExcedption;
+import com.example.demo.message.MessageProducer;
 import com.example.demo.model.entity.*;
 import com.example.demo.model.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class OrderService {
     @Autowired
     ItemService itemService;
 
+    @Autowired
+    MessageProducer producer;
+
     @Transactional
     public Order registerOrder(Order order){
 
@@ -33,7 +37,11 @@ public class OrderService {
 
         //if new, register first
         if(customer.getId() == 0){
+
             customer = customerService.registerCustomer(customer);
+
+            producer.produceMessageOnCustomerRegistration(customer);
+
             order.setCustomer(customer);
         }
 
@@ -71,6 +79,7 @@ public class OrderService {
         saleService.updateTotalSale(customerSale);
 
         //send messages by Kafka including customer and customer sale info
+        producer.produceMessageOnUpdateCustomerSale(customerSale);
 
         return ord;
     }
@@ -94,6 +103,7 @@ public class OrderService {
         saleService.updateTotalSale(customerSale);
 
         //send messages by Kafka including customer sale info
+        producer.produceMessageOnUpdateCustomerSale(customerSale);
 
         return order;
     }
@@ -123,6 +133,7 @@ public class OrderService {
         saleService.updateTotalSale(customerSale);
 
         //send messages by Kafka including customer and customer sale info
+        producer.produceMessageOnUpdateCustomerSale(customerSale);
 
         return orderList.size();
     }
