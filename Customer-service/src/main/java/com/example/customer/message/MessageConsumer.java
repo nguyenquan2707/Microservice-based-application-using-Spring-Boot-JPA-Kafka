@@ -1,9 +1,9 @@
 package com.example.customer.message;
 
-import com.example.customer.model.dao.ICustomerDao;
-import com.example.customer.model.dao.ICustomerSaleDao;
 import com.example.customer.model.entity.Customer;
 import com.example.customer.model.entity.CustomerSale;
+import com.example.customer.service.CustomerSaleService;
+import com.example.customer.service.CustomerService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -24,10 +24,10 @@ public class MessageConsumer {
     private ObjectMapper objectMapper;
 
     @Autowired
-    ICustomerSaleDao iCustomerSaleDao;
+    CustomerSaleService customerSaleService;
 
     @Autowired
-    ICustomerDao iCustomerDao;
+    CustomerService customerService;
 
     @KafkaListener(topics = TOPIC_UPDATE_SALE_INFO)
     void consumeMessageOnUpdateSaleInfo(String message){
@@ -35,7 +35,7 @@ public class MessageConsumer {
         try {
             CustomerSale sale = objectMapper.readValue(message, CustomerSale.class);
 
-            iCustomerSaleDao.updateSale(sale);
+            customerSaleService.updateTotalSale(sale);
 
         } catch (JsonProcessingException e) {
             logger.error(e.getMessage(),e);
@@ -49,7 +49,8 @@ public class MessageConsumer {
         try {
             Customer customer = objectMapper.readValue(message, Customer.class);
 
-            iCustomerDao.addCustomer(customer);
+            customerService.registerCustomer(
+                    customer);
 
         } catch (JsonProcessingException e) {
             logger.error(e.getMessage(),e);

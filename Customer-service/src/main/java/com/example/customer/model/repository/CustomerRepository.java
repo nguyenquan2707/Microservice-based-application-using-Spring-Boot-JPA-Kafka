@@ -19,7 +19,7 @@ public class CustomerRepository implements ICustomerDao {
     @Override
     public Customer addCustomer(Customer customer) {
 
-        entityManager.persist(customer);
+        entityManager.merge(customer);
 
         return customer;
     }

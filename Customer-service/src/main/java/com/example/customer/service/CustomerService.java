@@ -30,15 +30,11 @@ public class CustomerService {
     public Customer registerCustomer(Customer customer){
 
         // check already present
-        Customer cust = customerDao.getCustomer(customer.getMobile_no());
+        Customer customerExisted = customerDao.getCustomer(customer.getMobile_no());
 
         //if present, update
-        if(cust != null)
-            return customerDao.updateCustomer(cust);
-
-        // if not present , save new
-        CustomerSale sale = new CustomerSale();
-        customer.setSale(sale);
+        if(customerExisted != null)
+            return customerDao.updateCustomer(customerExisted);
 
         return customerDao.addCustomer(customer);
     }

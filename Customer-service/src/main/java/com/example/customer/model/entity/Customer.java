@@ -8,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     long id;
 
