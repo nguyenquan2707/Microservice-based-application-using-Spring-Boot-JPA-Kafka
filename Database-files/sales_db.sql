@@ -52,15 +52,28 @@ CREATE TABLE `cheque_payment` (
   `amount` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
---
--- Dumping data for table `cheque_payment`
---
-
-INSERT INTO `cheque_payment` (`id`, `order_id`, `bank_name`, `bank_branch`, `cheque_no`, `cheque_date`, `amount`) VALUES
-(35, 35, 'UBI', 'bpc', 1234, '22-09-2020', 440);
-
 -- --------------------------------------------------------
 
+ALTER TABLE `card_payment`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `cheque_payment`
+  ADD PRIMARY KEY (`id`);
+
+-- --------------------------------------------------------
+--
+-- AUTO_INCREMENT for table `card_payment`
+--
+ALTER TABLE `card_payment`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `cheque_payment`
+--
+ALTER TABLE `cheque_payment`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+-- --------------------------------------------------------
 --
 -- Table structure for table `customer`
 --
@@ -73,12 +86,16 @@ CREATE TABLE `customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 --
--- Dumping data for table `customer`
+-- Indexes for table `customer`
 --
-
-INSERT INTO `customer` (`id`, `name`, `mobile_no`, `address`) VALUES
-(30, 'Harugopal Das', '9734328919', 'Nadia, WB'),
-(31, 'Pinaki Pal', '7384709073', 'Nadia, WB');
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`id`);
+ 
+--
+-- AUTO_INCREMENT for table `customer`
+--
+ALTER TABLE `customer`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 -- --------------------------------------------------------
 
@@ -91,13 +108,20 @@ CREATE TABLE `customer_vs_total_sale` (
   `total_sale` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
---
--- Dumping data for table `customer_vs_total_sale`
---
 
-INSERT INTO `customer_vs_total_sale` (`customer_id`, `total_sale`) VALUES
-(30, 1),
-(31, 2);
+
+--
+-- Indexes for table `customer_vs_total_sale`
+--
+ALTER TABLE `customer_vs_total_sale`
+  ADD PRIMARY KEY (`customer_id`);
+
+--
+-- Constraints for table `customer_vs_total_sale`
+--
+ALTER TABLE `customer_vs_total_sale`
+  ADD CONSTRAINT `customer_vs_total_sale_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE;
+  
 
 -- --------------------------------------------------------
 
@@ -113,6 +137,19 @@ CREATE TABLE `item` (
   `unit_price` int(5) NOT NULL,
   `tax_percentage` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
+
+--
+-- Indexes for table `item`
+--
+ALTER TABLE `item`
+  ADD PRIMARY KEY (`id`);
+
+  
+--
+-- AUTO_INCREMENT for table `item`
+--
+ALTER TABLE `item`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
 
 --
 -- Dumping data for table `item`
@@ -137,13 +174,17 @@ CREATE TABLE `order` (
   `customerId` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
---
--- Dumping data for table `order`
---
 
-INSERT INTO `order` (`id`, `delivery_address`, `order_date`, `total`, `customerId`) VALUES
-(35, 'MSD, WB', '21-01-2021', 5500, 31);
-
+--
+-- Indexes for table `order`
+--
+ALTER TABLE `order`
+  ADD PRIMARY KEY (`id`);
+--
+-- AUTO_INCREMENT for table `order`
+--
+ALTER TABLE `order`
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 -- --------------------------------------------------------
 
 --
@@ -164,111 +205,23 @@ CREATE TABLE `orderLine` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 --
--- Dumping data for table `orderLine`
---
-
-INSERT INTO `orderLine` (`id`, `amount`, `itemId`, `line_total`, `orderId`, `quantity`, `tax_amount`, `tax_percentage`, `unit`, `unit_cost`) VALUES
-(6, 220, 1, 440, 12, 2, 3, 0, 'ltr', 20),
-(7, 220, 1, 440, 13, 2, 3, 0, 'ltr', 20),
-(8, 220, 1, 440, 14, 2, 3, 0, 'ltr', 20),
-(9, 220, 1, 440, 15, 2, 3, 0, 'ltr', 20),
-(10, 220, 1, 440, 16, 2, 3, 0, 'ltr', 20),
-(29, 220, 1, 440, 35, 2, 3, 0, 'ltr', 20);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `card_payment`
---
-ALTER TABLE `card_payment`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `order_id` (`order_id`);
-
---
--- Indexes for table `cheque_payment`
---
-ALTER TABLE `cheque_payment`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_ch_payment_orderid_order_id` (`order_id`);
-
---
--- Indexes for table `customer`
---
-ALTER TABLE `customer`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `customer_vs_total_sale`
---
-ALTER TABLE `customer_vs_total_sale`
-  ADD PRIMARY KEY (`customer_id`);
-
---
--- Indexes for table `item`
---
-ALTER TABLE `item`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `order`
---
-ALTER TABLE `order`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_order_cid_cust_id` (`customerId`);
-
---
 -- Indexes for table `orderLine`
 --
 ALTER TABLE `orderLine`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `OrderLine_ibfk_1` (`orderId`),
-  ADD KEY `OrderLine_ibfk_2` (`itemId`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `card_payment`
---
-ALTER TABLE `card_payment`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `cheque_payment`
---
-ALTER TABLE `cheque_payment`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
-
---
--- AUTO_INCREMENT for table `customer`
---
-ALTER TABLE `customer`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
-
---
--- AUTO_INCREMENT for table `item`
---
-ALTER TABLE `item`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `order`
---
-ALTER TABLE `order`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for table `orderLine`
 --
 ALTER TABLE `orderLine`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+--
+-- Constraints for table `orderLine`
+--
+ALTER TABLE `orderLine`
+  ADD CONSTRAINT `OrderLine_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `order` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `OrderLine_ibfk_2` FOREIGN KEY (`itemId`) REFERENCES `item` (`id`) ON DELETE CASCADE;
 
---
--- Constraints for dumped tables
---
 
 --
 -- Constraints for table `card_payment`
@@ -280,29 +233,31 @@ ALTER TABLE `card_payment`
 -- Constraints for table `cheque_payment`
 --
 ALTER TABLE `cheque_payment`
-  ADD CONSTRAINT `fk_ch_payment_orderid_order_id` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_cp_order_id` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `customer_vs_total_sale`
---
-ALTER TABLE `customer_vs_total_sale`
-  ADD CONSTRAINT `customer_vs_total_sale_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_ch_payment_orderid_order_id` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `order`
 --
 ALTER TABLE `order`
-  ADD CONSTRAINT `fk_order_cid_cust_id` FOREIGN KEY (`customerId`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`customerId`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customerId`) REFERENCES `customer_vs_total_sale` (`customer_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_order_cid_cust_id` FOREIGN KEY (`customerId`) REFERENCES `customer` (`id`) ON DELETE CASCADE;
 
---
--- Constraints for table `orderLine`
---
-ALTER TABLE `orderLine`
-  ADD CONSTRAINT `OrderLine_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `order` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `OrderLine_ibfk_2` FOREIGN KEY (`itemId`) REFERENCES `item` (`id`) ON DELETE CASCADE;
+-- --------------------------------------------------------
+ 
+INSERT INTO `customer` (`id`, `name`, `mobile_no`, `address`) VALUES
+(31, 'Pinaki Pal', '7384709073', 'Nadia, WB');
+
+INSERT INTO `customer_vs_total_sale` (`customer_id`, `total_sale`) VALUES
+(31, 2);
+ 
+INSERT INTO `order` (`id`, `delivery_address`, `order_date`, `total`, `customerId`) VALUES
+(35, 'MSD, WB', '21-01-2021', 5500, 31);
+
+INSERT INTO `orderLine` (`id`, `amount`, `itemId`, `line_total`, `orderId`, `quantity`, `tax_amount`, `tax_percentage`, `unit`, `unit_cost`) VALUES
+(29, 220, 1, 440, 35, 2, 3, 0, 'ltr', 20);
+
+INSERT INTO `cheque_payment` (`id`, `order_id`, `bank_name`, `bank_branch`, `cheque_no`, `cheque_date`, `amount`) VALUES
+(35, 35, 'UBI', 'bpc', 1234, '22-09-2020', 440);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
