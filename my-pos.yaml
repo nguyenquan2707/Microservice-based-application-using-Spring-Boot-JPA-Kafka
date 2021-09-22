@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  db-cust:
+    image: abhishek050990/customer-db:1.0
+    container_name: con-db-cust
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "6033:3306"
+  phpmyadmin-cust:
+    image: phpmyadmin/phpmyadmin
+    container_name: con-pma-cust
+    depends_on:
+      - db-cust
+    environment:
+      PMA_HOST: con-db-cust
+    ports:
+      - 8081:80
+  db-sales:
+    image: abhishek050990/sales-db:1.0
+    container_name: con-db-sales
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "6034:3306"
+  phpmyadmin-sales:
+    image: phpmyadmin/phpmyadmin
+    container_name: con-pma-sales
+    depends_on:
+      - db-sales
+    environment:
+      PMA_HOST: con-db-sales
+    ports:
+      - 8082:80
+  db-inventory:
+    image: abhishek050990/inventory-db:1.0
+    container_name: con-db-inventory
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "6035:3306"
+  phpmyadmin-inventory:
+    image: phpmyadmin/phpmyadmin
+    container_name: con-pma-inventory
+    depends_on:
+      - db-inventory
+    environment:
+      PMA_HOST: con-db-inventory
+    ports:
+      - 8083:80
