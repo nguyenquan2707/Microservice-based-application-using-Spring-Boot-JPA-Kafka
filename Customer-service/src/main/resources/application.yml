@@ -1,13 +1,13 @@
 server:
-  port: 8081
+  port: 9081
 
 spring:
   application:
     name: customer-service
   datasource:
-    url: jdbc:mysql://localhost:3306/customer_db
+    url: jdbc:mysql://localhost:6033/pos-customer
     username: root
-    password:
+    password: root
   jpa:
     show-sql: true
     hibernate:

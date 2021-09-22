@@ -1,12 +1,12 @@
 server:
-  port: 8083
+  port: 9083
 spring:
   application:
     name: sales-service
   datasource:
-    url: jdbc:mysql://localhost:3306/sales_db
+    url: jdbc:mysql://localhost:6034/pos-sales
     username: root
-    password:
+    password: root
   jpa:
     show-sql: true
     hibernate:
