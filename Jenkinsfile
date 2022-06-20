@@ -10,10 +10,12 @@ pipeline {
         }
         stage('initialize params'){
             steps {
-                def pom = readMavenPom file: 'pom.xml'
-                appName = pom.name
-                appName = appName.toLowerCase()
-                echo "Appname: ${appName}"
+                script{
+                    def pom = readMavenPom file: 'pom.xml'
+                    appName = pom.name
+                    appName = appName.toLowerCase()
+                    echo "Appname: ${appName}"
+                }
             }
         }
         stage('deploy') {
