@@ -19,7 +19,7 @@ pipeline {
             steps{
                 script{
 //                    echo "${env.WORKSPACE}"
-                     sh 'docker build -t img-pos-cust .'
+                     sh 'docker build -t img-pos-cust -f Customer-service/Dockerfile .'
 //                     sh 'docker run -d -p 8081:8080  devops-integration:latest'
               }
           }
