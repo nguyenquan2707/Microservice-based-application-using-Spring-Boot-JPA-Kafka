@@ -1,9 +1,11 @@
 pipeline {
     agent any 
     stages {
-        stage('build') {
+        stage('checkout') {
             steps {
-                echo 'building the application' 
+                echo 'checking out the application' 
+                deleteDir()
+                checkout scm
             }
         }
         stage('test') {
