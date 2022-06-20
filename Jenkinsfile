@@ -21,7 +21,7 @@ pipeline {
 //                    echo "${env.WORKSPACE}"
                      def wspace = env.WORKSPACE
                      echo wspace
-                     bat 'docker build -t img-pos-cust -f /Customer-service/Dockerfile .'
+                     bat 'docker build -t img-pos-cust -f Customer-service/Dockerfile .'
 //                     sh 'docker run -d -p 8081:8080  devops-integration:latest'
               }
           }
