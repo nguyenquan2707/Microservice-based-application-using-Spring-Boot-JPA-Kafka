@@ -18,9 +18,11 @@ pipeline {
                 }
             }
         }
-        stage('deploy') {
+        stage('Build stage') {
             steps {
-                echo 'deploying the application' 
+                withMaven(maven : 'maven_3.8.6'){
+                    sh 'mvn clean install'
+                } 
             }
         }
     }
