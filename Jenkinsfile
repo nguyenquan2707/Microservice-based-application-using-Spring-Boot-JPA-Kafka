@@ -1,29 +1,28 @@
 pipeline {
-    agent any 
+    agent any
     stages {
         stage('checkout') {
             steps {
-                echo 'checking out the application' 
+                echo 'checking out the application'
                 deleteDir()
                 checkout scm
-            }
-        }
-        stage('initialize params'){
-            steps {
-                script{
-                    def pom = readMavenPom file: 'pom.xml'
-                    appName = pom.name
-                    appName = appName.toLowerCase()
-                    echo "Appname: ${appName}"
-                }
             }
         }
         stage('Build stage') {
             steps {
                 withMaven(maven : 'maven_3.1.0'){
                     bat 'mvn clean install'
-                } 
+                }
             }
+        }
+        stage('build docker image'){
+            steps{
+                script{
+                    echo "${env.WORKSPACE}"
+//                     sh 'docker build -t img-pos-cust .'
+//                     sh 'docker run -d -p 8081:8080  devops-integration:latest'
+              }
+          }
         }
     }
 }
