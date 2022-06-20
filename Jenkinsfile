@@ -8,9 +8,12 @@ pipeline {
                 checkout scm
             }
         }
-        stage('test') {
-            steps {
-                echo 'testing the application' 
+        stage('initialize params'){
+            steps{
+                def pom = readMavenPom file: 'pom.xml'
+                appName = pom.name
+                appName = appName.toLowerCase()
+                echo "Appname: ${appName}"
             }
         }
         stage('deploy') {
