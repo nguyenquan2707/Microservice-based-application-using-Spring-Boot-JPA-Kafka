@@ -18,7 +18,7 @@ pipeline {
         stage('run docker compose file'){
                 steps{
                     script{
-                        sh "docker-compose -f pos-docker-compose.yml up"
+                        bat "docker-compose -f pos-docker-compose.yml up"
                     }
                 }
             }
