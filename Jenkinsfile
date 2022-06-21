@@ -11,7 +11,7 @@ pipeline {
         stage('run docker compose file'){
             steps{
                 script{
-                    bat "docker-compose -f pos-docker-compose.yml up"
+                    bat "docker-compose -f pos-docker-compose.yml up -d"
                 }
             }
         }
@@ -22,7 +22,6 @@ pipeline {
                 }
             }
         }
-
         stage('build docker images'){
             steps{
                 script{
