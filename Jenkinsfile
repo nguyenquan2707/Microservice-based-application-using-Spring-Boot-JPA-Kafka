@@ -18,9 +18,8 @@ pipeline {
         stage('build docker image'){
             steps{
                 script{
-                     def wspace = env.WORKSPACE
-                     echo wspace
                      bat "docker build -t img-pos-cust -f Customer-service/Dockerfile ."
+                     bat "docker build -t img-pos-sales -f Inventory-service/Dockerfile ."
               }
           }
         }
