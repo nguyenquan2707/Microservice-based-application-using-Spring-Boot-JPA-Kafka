@@ -18,11 +18,9 @@ pipeline {
         stage('build docker image'){
             steps{
                 script{
-//                    echo "${env.WORKSPACE}"
                      def wspace = env.WORKSPACE
                      echo wspace
-                     bat "docker build -t img-pos-cust --build-arg rootSrc=${wspace} -f Customer-service/Dockerfile ."
-//                     sh 'docker run -d -p 8081:8080  devops-integration:latest'
+                     bat "docker build -t img-pos-cust -f Customer-service/Dockerfile ."
               }
           }
         }
