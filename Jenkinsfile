@@ -15,7 +15,14 @@ pipeline {
                 }
             }
         }
-        stage('build docker image'){
+        stage('run docker compose file'){
+                steps{
+                    script{
+                        sh "docker-compose -f pos-docker-compose.yml up"
+                    }
+                }
+            }
+        stage('build docker images'){
             steps{
                 script{
                      bat "docker build -t img-pos-cust -f Customer-service/Dockerfile ."
