@@ -8,6 +8,13 @@ pipeline {
                 checkout scm
             }
         }
+        stage('run docker compose file'){
+            steps{
+                script{
+                    bat "docker-compose -f pos-docker-compose.yml up"
+                }
+            }
+        }
         stage('Build stage') {
             steps {
                 withMaven(maven : 'maven_3.1.0'){
@@ -15,13 +22,7 @@ pipeline {
                 }
             }
         }
-        stage('run docker compose file'){
-                steps{
-                    script{
-                        bat "docker-compose -f pos-docker-compose.yml up"
-                    }
-                }
-            }
+
         stage('build docker images'){
             steps{
                 script{
