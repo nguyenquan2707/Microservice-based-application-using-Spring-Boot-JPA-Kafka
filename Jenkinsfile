@@ -1,14 +1,14 @@
 pipeline {
     agent any
     stages {
-        stage('checkout') {
+        stage('Checkout') {
             steps {
                 echo 'checking out the application'
                 deleteDir()
                 checkout scm
             }
         }
-        stage('run docker compose file'){
+        stage('Run docker compose file'){
             steps{
                 script{
                     bat "docker-compose -f pos-docker-compose.yml up -d"
@@ -22,7 +22,7 @@ pipeline {
                 }
             }
         }
-        stage('build docker images'){
+        stage('Build docker images'){
             steps{
                 script{
                      bat "docker build -t img-pos-cust -f Customer-service/Dockerfile ."
