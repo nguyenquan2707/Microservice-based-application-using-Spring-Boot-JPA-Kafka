@@ -1,9 +1,10 @@
-package com.example.customer.service;
+package com.example.customer.handler;
 
 import com.example.customer.exceptions.NoCustomerExistException;
 import com.example.customer.model.dao.ICustomerSaleDao;
 import com.example.customer.model.entity.CustomerSale;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
 @Service

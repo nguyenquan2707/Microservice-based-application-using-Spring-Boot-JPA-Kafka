@@ -3,7 +3,7 @@ package com.example.customer.controller;
 import com.example.customer.model.entity.Customer;
 import com.example.customer.model.entity.CustomerSale;
 import com.example.customer.model.entity.Response;
-import com.example.customer.service.CustomerSaleService;
+import com.example.customer.handler.CustomerSaleService;
 import com.example.customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

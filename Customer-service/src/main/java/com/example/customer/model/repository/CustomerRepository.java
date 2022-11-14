@@ -2,6 +2,7 @@ package com.example.customer.model.repository;
 
 import com.example.customer.model.dao.ICustomerDao;
 import com.example.customer.model.entity.Customer;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +43,7 @@ public class CustomerRepository implements ICustomerDao {
 
         Query query = entityManager.createQuery("Select c from Customer c where c.mobile_no = "+mobileNo);
 
+        System.out.println(query);
         Customer customer = (Customer) query.getResultList().stream().findFirst().orElse(null);
 
         return customer;

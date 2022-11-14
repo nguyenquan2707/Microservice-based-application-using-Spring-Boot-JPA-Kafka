@@ -2,6 +2,7 @@ package com.example.customer.exceptions;
 
 import com.example.customer.model.entity.Customer;
 import com.example.customer.model.entity.Response;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
+@ComponentScan(basePackages = {"com.example.customer"})
 public class ExceptionHandlerControllerAdvice {
 
     @ExceptionHandler(NoCustomerExistException.class)

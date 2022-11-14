@@ -6,6 +6,9 @@ import com.example.customer.model.dao.ICustomerDao;
 import com.example.customer.model.entity.Customer;
 import com.example.customer.model.entity.CustomerSale;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,8 +20,9 @@ public class CustomerService {
     //getCustomer
     public Customer getCustomer(String mobileNo){
 
+        System.out.println("MOBILE NO "+mobileNo);
         Customer customer = customerDao.getCustomer(mobileNo);
-
+        System.out.println(customer == null);
         if(customer == null)
             throw new NoCustomerExistException("No such customer exist with mobile no "+mobileNo);
 

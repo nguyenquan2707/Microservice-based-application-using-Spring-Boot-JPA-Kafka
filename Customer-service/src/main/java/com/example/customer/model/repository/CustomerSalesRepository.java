@@ -5,12 +5,12 @@ import com.example.customer.model.dao.ICustomerSaleDao;
 import com.example.customer.model.entity.Customer;
 import com.example.customer.model.entity.CustomerSale;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 @Transactional
 @Repository
 public class CustomerSalesRepository implements ICustomerSaleDao {
