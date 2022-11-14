@@ -23,3 +23,10 @@ jobs:
       run: |
             cd Customer-service
             mvn clean install -DskipTests
+            mkdir artifacts && cp target/*.jar artifacts
+            cd artifacts && ls
+    - name: Save to artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: github-actions-artifact
+        path: artifacts
